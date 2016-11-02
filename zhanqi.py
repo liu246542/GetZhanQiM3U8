@@ -23,15 +23,20 @@ def write_m3u8(sid,title):
 	file.write('DAUMPLAYLIST'+'\n')	
 	filem = codecs.open('zhanqim.dpl','w+','utf-8')
 	filem.write('DAUMPLAYLIST'+'\n')
+	filel = codecs.open('zhanqil.txt','w+','utf-8')
 	n = 1
 	for(i,j)in zip(sid,title):
 		file.write(str(n)+"*file*http://wshdl.load.cdn.zhanqi.tv/zqlive/"+i+'.flv\n')
 		file.write(str(n)+"*title*"+j+'\n')
 		filem.write(str(n)+"*file*http://dlhls.cdn.zhanqi.tv/zqlive/"+i+'.m3u8\n')
 		filem.write(str(n)+"*title*"+j+'\n')
+		filel.write(j+'\n')
+		filel.write("http://dlhls.cdn.zhanqi.tv/zqlive/"+i+'.m3u8\n')
 		n += 1
 	file.close()
 	filem.close()
+	filel.close()
 
 if __name__ == '__main__':
 	get_index_sources()
+	print('所有数据已写好')
