@@ -1,6 +1,8 @@
-import urllib.request as http
-import re
+#!/usr/bin/python3
+# coding=utf-8
+import requests
 import codecs
+import sys
 
 #定义获取id和标题的函数
 def get_index_sources():
@@ -8,14 +10,23 @@ def get_index_sources():
 	title = []
 	count = 1
 	while(count < 10):
-		content = http.urlopen('http://www.zhanqi.tv/api/static/game.lives/45/30-'+str(count)+'.json').read().decode('UTF-8')
+		content = requests.get("http://www.zhanqi.tv/api/static/v2.1/game/live/45/30/" + str(count) + ".json").json()
 		count += 1
-		temp_sid = re.findall('(?<=videoId":")[^"]*',content)
-		if(not temp_sid):
+		temp_sid = content['data']['rooms'] # [0]['videoId']
+		if(temp_sid == []):
 			break
-		title = title + re.findall('(?<=title":")[^"]*',content)
-		sid = sid + temp_sid
-	write_m3u8(sid,title)
+		else:
+			sid.extend(list(map(lambda x: x['videoId'],content['data']['rooms'])))
+			title.extend(list(map(lambda x: x['title'],content['data']['rooms'])))
+	return sid,title
+
+def process_m3u8(sid):
+	m3u8_list = list(map(lambda x : 'http://dlhls.cdn.zhanqi.tv/zqlive/' + x + '.m3u8',sid))
+	return m3u8_list
+
+def zhan_play(m3u8_list,i):
+	import subprocess
+	subprocess.call('mpv' + ' \"' + m3u8_list[i] + '\"',shell = True)
 
 #定义将直播源写入的函数
 def write_m3u8(sid,title):
@@ -37,6 +48,42 @@ def write_m3u8(sid,title):
 	filem.close()
 	filel.close()
 
+def zhan_search(title):
+	key_words = input("请输入关键词：")
+	def filt_zhan(num_title):
+		i = num_title[0]
+		x = num_title[1]
+		return reg_kword.search(x)
+	import re
+	reg_kword = re.compile(key_words)
+	flag_zhan = list(filter(filt_zhan, enumerate(title)))
+	return flag_zhan
+	# print(title)
+	# print(flag_zhan)
+
+
 if __name__ == '__main__':
-	get_index_sources()
-	print('所有数据已写好')
+	sid,title = get_index_sources()
+	m3u8_list = process_m3u8(sid)
+	i = 0
+	while i < 10:
+		flags = zhan_search(title)
+		if len(flags) == 0:
+			again_flag = input('没有找到，是否重试<y/n?>')
+			if(again_flag == 'y'):
+				continue
+			else:
+				break
+		elif len(flags) == 1:
+			zhan_play(m3u8_list,flags[0][0])
+			break
+		else:
+			print('请选择:')
+			# print(flags)
+			print('{0:-^10}|{1:-^10}'.format('index','title'))
+			for item in flags:
+				print('{0:-^10}|{1:-^10}'.format(item[0],item[1]))
+			play_num = input('请输入序号：')
+			zhan_play(m3u8_list,int(play_num))
+			break
+		i += 1
