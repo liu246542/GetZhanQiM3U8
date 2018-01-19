@@ -17,8 +17,8 @@ def get_index_sources():
 		if(temp_sid == []):
 			break
 		else:
-			sid.extend(list(map(lambda x: x['videoId'],content['data']['rooms'])))
-			title.extend(list(map(lambda x: x['title'],content['data']['rooms'])))
+			sid.extend([x['videoId'] for x in content['data']['rooms']])
+			title.extend([x['title'] for x in content['data']['rooms']])
 	return sid,title
 
 def process_m3u8(sid):
