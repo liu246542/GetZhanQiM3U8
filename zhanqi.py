@@ -3,6 +3,7 @@
 import requests
 import codecs
 import sys
+import platform
 
 #定义获取id和标题的函数
 def get_index_sources():
@@ -26,7 +27,10 @@ def process_m3u8(sid):
 
 def zhan_play(m3u8_list,i):
 	import subprocess
-	subprocess.call('mpv' + ' \"' + m3u8_list[i] + '\"',shell = True)
+	if(platform.system() == "Linux"):
+		subprocess.call('mpv' + ' \"' + m3u8_list[i] + '\"',shell = True)
+	elif(platform.system() == "Windows"):
+		subprocess.call("&\'C:\\Program Files\\PotPlayer\\PotPlayerMini64.exe\'" + ' \"' + m3u8_list[i] + '\"')
 
 #定义将直播源写入的函数
 def write_m3u8(sid,title):
