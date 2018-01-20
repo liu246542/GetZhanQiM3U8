@@ -80,7 +80,7 @@ if __name__ == '__main__':
 				break
 		elif len(flags) == 1:
 			zhan_play(m3u8_list,flags[0][0])
-			break
+			continue
 		else:
 			print('请选择:')
 			# print(flags)
