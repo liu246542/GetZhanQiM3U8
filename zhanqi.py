@@ -30,7 +30,7 @@ def zhan_play(m3u8_list,i):
 	if(platform.system() == "Linux"):
 		subprocess.call('mpv' + ' \"' + m3u8_list[i] + '\"',shell = True)
 	elif(platform.system() == "Windows"):
-		subprocess.call("&\'C:\\Program Files\\PotPlayer\\PotPlayerMini64.exe\'" + ' \"' + m3u8_list[i] + '\"')
+		subprocess.call('C:\\Program Files\\PotPlayer\\PotPlayerMini64.exe' + ' ' + m3u8_list[i])
 
 #定义将直播源写入的函数
 def write_m3u8(sid,title):
