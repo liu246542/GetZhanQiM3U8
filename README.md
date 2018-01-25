@@ -1,12 +1,14 @@
 # GetZhanQiM3U8
 
-获取战旗的游戏娱乐室的直播源
+战旗游戏娱乐室的直播
 
 ### requirement
 
-+ mpv
-+ python3
+```
+$ sudo apt install mpv
+$ [sudo] pip3 install requests
+```
 
 ### usage
 
-`python3 ./zhanqi.py`
+`python3 ./main.py`
