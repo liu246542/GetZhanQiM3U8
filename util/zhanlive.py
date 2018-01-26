@@ -30,7 +30,7 @@ class Zhanlive(object):
 			else:
 				self.sid.extend([x['videoId'] for x in content['data']['rooms']])
 				self.title.extend([x['title'] for x in content['data']['rooms']])
-				self.plist = ['http://dlhls.cdn.zhanqi.tv/zqlive/' + x + '.m3u8' for x in self.sid]
+				self.plist = ['http://alhls.cdn.zhanqi.tv/zqlive/' + x + '.m3u8' for x in self.sid]
 
 	def search(self,keyword):		
 		def filt_zhan(num_title):
