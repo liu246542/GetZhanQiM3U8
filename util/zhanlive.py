@@ -10,7 +10,7 @@ class Zhanlive(object):
 		import subprocess
 		import platform
 		if(platform.system() == 'Linux'):
-			subprocess.call('mpv' + ' \"' + self.plist[pindex] + '\"',shell = True,stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
+			subprocess.call('mpv' + ' \"' + self.plist[pindex] + '\"',shell = True)
 		elif(platform.system() == "Windows"):
 			subprocess.call('C:\\Program Files\\PotPlayer\\PotPlayerMini64.exe' + ' ' + self.plist[pindex])
 	
@@ -40,7 +40,7 @@ class Zhanlive(object):
 		
 		import re
 		reg_kword = re.compile(keyword)
-		self.searesult = list(filter(filt_zhan,enumerate(self.title)))
+		self.sear_result = list(filter(filt_zhan,enumerate(self.title)))
 
 	def export(self):
 		import codecs
