@@ -23,5 +23,5 @@ if __name__ == '__main__':
         print('{0:-^10}|{1:-^10}'.format('index','title'))
         for item in app.sear_result:
             print('{0:-^10}|{1:-^10}'.format(item[0],item[1]))
-            play_num = input('请输入序号：')
-            app.play(int(play_num))
+        play_num = input('请输入序号：')
+        app.play(int(play_num))
