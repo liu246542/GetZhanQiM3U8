@@ -12,7 +12,12 @@ class Bilive(object):
         vdo_links = durls['durl']
         self.play_url = [x['url'] for x in vdo_links]
         import subprocess
-        subprocess.call('mpv' + ' \"' + self.play_url[0] + '\"', shell = True)
+        import platform
+        if(platform.system() == 'Linux'):            
+            subprocess.call('mpv' + ' \"' + self.plist[pindex] + '\"',shell = True)
+        elif(platform.system() == "Windows"):
+            subprocess.call('C:\\Program Files\\PotPlayer\\PotPlayerMini64.exe' + ' ' + self.plist[pindex])
+
     def update(self):
         self.room_ids = []
         self.room_titles = []
