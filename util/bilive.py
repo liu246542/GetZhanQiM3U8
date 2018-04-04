@@ -14,9 +14,9 @@ class Bilive(object):
         import subprocess
         import platform
         if(platform.system() == 'Linux'):            
-            subprocess.call('mpv' + ' \"' + self.plist[pindex] + '\"',shell = True)
+            subprocess.call('mpv' + ' \"' + self.play_url[0] + '\"',shell = True)
         elif(platform.system() == "Windows"):
-            subprocess.call('C:\\Program Files\\PotPlayer\\PotPlayerMini64.exe' + ' ' + self.plist[pindex])
+            subprocess.call('C:\\Program Files\\PotPlayer\\PotPlayerMini64.exe' + ' ' + self.play_url[0])
 
     def update(self):
         self.room_ids = []
